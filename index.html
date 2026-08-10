@@ -16,7 +16,7 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#" class="active">خانه</a></li>
+                <li><a href="#home" class="active">خانه</a></li>
                 <li><a href="#anime">انیمه</a></li>
                 <li><a href="#manga">مانگا</a></li>
                 <li><a href="#manhwa">مانهوا</a></li>
@@ -29,16 +29,17 @@
     </header>
 
     <!-- بخش Hero -->
-    <section class="hero">
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
         <div class="hero-content">
             <span class="badge">پیشنهاد ویژه</span>
             <h1>فریرن: فراسوی پایان سفر</h1>
             <p>داستانی حماسی از سفر الهه جادو فریرن و همراهانش پس از شکست دادن پادشاه شیاطین...</p>
             <div class="hero-buttons">
-                <button class="btn btn-primary" onclick="openModal(mockData.anime[0])">
+                <button class="btn btn-primary" onclick="playAnime()">
                     <i class="fas fa-play"></i> تماشا کنید
                 </button>
-                <button class="btn btn-outline">
+                <button class="btn btn-outline" onclick="addToList()">
                     <i class="fas fa-plus"></i> افزودن به لیست
                 </button>
             </div>
@@ -47,33 +48,39 @@
 
     <!-- بخش انیمه‌ها -->
     <section id="anime">
-        <div class="section-title">
-            <h2><i class="fas fa-fire"></i> انیمه‌های برتر فصل</h2>
-            <a href="#" class="view-all">مشاهده همه</a>
-        </div>
-        <div class="grid-container" id="anime-grid">
-            <div class="loader-container">
-                <div class="spinner"></div>
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-fire"></i> انیمه‌های برتر فصل</h2>
+                <a href="#" class="view-all">مشاهده همه</a>
+            </div>
+            <div class="grid-container" id="anime-grid">
+                <div class="loader-container">
+                    <div class="spinner"></div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- بخش مانگا‌ها -->
     <section id="manga">
-        <div class="section-title">
-            <h2><i class="fas fa-book"></i> مانگاهای محبوب</h2>
-            <a href="#" class="view-all">مشاهده همه</a>
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-book"></i> مانگاهای محبوب</h2>
+                <a href="#" class="view-all">مشاهده همه</a>
+            </div>
+            <div class="grid-container" id="manga-grid"></div>
         </div>
-        <div class="grid-container" id="manga-grid"></div>
     </section>
 
     <!-- بخش مانهواها -->
     <section id="manhwa">
-        <div class="section-title">
-            <h2><i class="fas fa-scroll"></i> مانهواهای ترند</h2>
-            <a href="#" class="view-all">مشاهده همه</a>
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-scroll"></i> مانهواهای ترند</h2>
+                <a href="#" class="view-all">مشاهده همه</a>
+            </div>
+            <div class="grid-container" id="manhwa-grid"></div>
         </div>
-        <div class="grid-container" id="manhwa-grid"></div>
     </section>
 
     <!-- مودال جزئیات -->
@@ -106,14 +113,14 @@
         <div class="footer-content">
             <div class="footer-col">
                 <h3>AnimeWorld</h3>
-                <p style="color: var(--text-gray); line-height: 1.8;">
+                <p>
                     بهترین مرجع پخش آنلاین انیمه و مطالعه مانگا و مانهوا با زیرنویس فارسی
                 </p>
             </div>
             <div class="footer-col">
                 <h3>دسترسی سریع</h3>
                 <ul>
-                    <li><a href="#">خانه</a></li>
+                    <li><a href="#home">خانه</a></li>
                     <li><a href="#anime">انیمه‌ها</a></li>
                     <li><a href="#manga">مانگاها</a></li>
                     <li><a href="#manhwa">مانهواها</a></li>
