@@ -3,361 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آنیمه لند | پخش آنلاین انیمه و مانگا</title>
-    <style>
-        :root {
-            --primary-color: #6c5ce7;
-            --secondary-color: #a29bfe;
-            --bg-dark: #1e1e2e;
-            --bg-card: #2d2d44;
-            --text-light: #f5f6fa;
-            --text-gray: #a4b0be;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tahoma', 'Segoe UI', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        /* Header */
-        header {
-            background-color: rgba(30, 30, 46, 0.95);
-            padding: 1rem 5%;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #333;
-            backdrop-filter: blur(10px);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 20px;
-        }
-
-        nav a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--primary-color);
-        }
-
-        .search-box {
-            display: flex;
-            gap: 10px;
-        }
-
-        input[type="text"] {
-            padding: 8px 15px;
-            border-radius: 20px;
-            border: none;
-            background: var(--bg-card);
-            color: white;
-            outline: none;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 60vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(30,30,46,1)), url('https://via.placeholder.com/1920x1080/6c5ce7/ffffff?text=Anime+Banner');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 20px rgba(108, 92, 231, 0.5);
-        }
-
-        .btn {
-            padding: 10px 30px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: transform 0.2s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-            background-color: var(--secondary-color);
-        }
-
-        /* Content Sections */
-        .container {
-            padding: 2rem 5%;
-        }
-
-        .section-title {
-            margin-bottom: 1.5rem;
-            border-right: 4px solid var(--primary-color);
-            padding-right: 15px;
-            font-size: 1.5rem;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background-color: var(--bg-card);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-        }
-
-        .card-info {
-            padding: 15px;
-        }
-
-        .card-title {
-            font-size: 1rem;
-            margin-bottom: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .card-meta {
-            font-size: 0.8rem;
-            color: var(--text-gray);
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .badge {
-            background: var(--primary-color);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-        }
-
-        /* Player Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .video-container {
-            width: 80%;
-            max-width: 900px;
-            aspect-ratio: 16/9;
-            background: black;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: #151520;
-            color: var(--text-gray);
-            margin-top: 3rem;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-            .video-container { width: 95%; }
-            nav ul { display: none; } /* Simplified for mobile demo */
-        }
-    </style>
+    <title>AnimeWorld - پخش آنلاین انیمه و مانگا</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
-    <!-- Header -->
+    <!-- هدر -->
     <header>
-        <a href="#" class="logo">🌸 آنیمه لند</a>
+        <div class="logo">
+            <i class="fas fa-play-circle"></i>
+            <span>Anime</span>World
+        </div>
         <nav>
             <ul>
+                <li><a href="#" class="active">خانه</a></li>
                 <li><a href="#anime">انیمه</a></li>
                 <li><a href="#manga">مانگا</a></li>
                 <li><a href="#manhwa">مانهوا</a></li>
-                <li><a href="#schedule">برنامه پخش</a></li>
             </ul>
         </nav>
         <div class="search-box">
-            <input type="text" placeholder="جستجو کنید...">
+            <input type="text" id="search-input" placeholder="جستجو...">
+            <button><i class="fas fa-search"></i></button>
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- بخش Hero -->
     <section class="hero">
-        <h1>دنیای بی‌پایان انیمه و مانگا</h1>
-        <p style="margin-bottom: 20px; color: #ccc;">جدیدترین قسمت‌ها را با زیرنویس فارسی تماشا کنید</p>
-        <a href="#anime" class="btn">شروع تماشا</a>
+        <div class="hero-content">
+            <span class="badge">پیشنهاد ویژه</span>
+            <h1>فریرن: فراسوی پایان سفر</h1>
+            <p>داستانی حماسی از سفر الهه جادو فریرن و همراهانش پس از شکست دادن پادشاه شیاطین...</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="openModal(mockData.anime[0])">
+                    <i class="fas fa-play"></i> تماشا کنید
+                </button>
+                <button class="btn btn-outline">
+                    <i class="fas fa-plus"></i> افزودن به لیست
+                </button>
+            </div>
+        </div>
     </section>
 
-    <!-- Anime Section -->
-    <div class="container" id="anime">
-        <h2 class="section-title">🔥 انیمه‌های برتر فصل</h2>
-        <div class="grid" id="anime-grid">
-            <!-- Cards will be injected by JS -->
+    <!-- بخش انیمه‌ها -->
+    <section id="anime">
+        <div class="section-title">
+            <h2><i class="fas fa-fire"></i> انیمه‌های برتر فصل</h2>
+            <a href="#" class="view-all">مشاهده همه</a>
+        </div>
+        <div class="grid-container" id="anime-grid">
+            <div class="loader-container">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش مانگا‌ها -->
+    <section id="manga">
+        <div class="section-title">
+            <h2><i class="fas fa-book"></i> مانگاهای محبوب</h2>
+            <a href="#" class="view-all">مشاهده همه</a>
+        </div>
+        <div class="grid-container" id="manga-grid"></div>
+    </section>
+
+    <!-- بخش مانهواها -->
+    <section id="manhwa">
+        <div class="section-title">
+            <h2><i class="fas fa-scroll"></i> مانهواهای ترند</h2>
+            <a href="#" class="view-all">مشاهده همه</a>
+        </div>
+        <div class="grid-container" id="manhwa-grid"></div>
+    </section>
+
+    <!-- مودال جزئیات -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-poster">
+                <img id="modal-poster" src="" alt="Poster">
+            </div>
+            <div class="modal-details">
+                <div class="modal-header">
+                    <h2 id="modal-title">عنوان</h2>
+                </div>
+                <div class="modal-stats" id="modal-stats"></div>
+                <div class="video-container">
+                    <iframe id="video-frame" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <p class="modal-description" id="modal-desc"></p>
+                <button class="btn btn-primary">
+                    <i class="fas fa-play"></i> پخش قسمت ۱
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- Manga/Manhwa Section -->
-    <div class="container" id="manga">
-        <h2 class="section-title">📚 مانگا و مانهواهای محبوب</h2>
-        <div class="grid" id="manga-grid">
-            <!-- Cards will be injected by JS -->
-        </div>
-    </div>
-
-    <!-- Video Player Modal -->
-    <div class="modal" id="player-modal">
-        <span class="close-btn" onclick="closePlayer()">&times;</span>
-        <div class="video-container">
-            <iframe id="video-frame" src="" allowfullscreen></iframe>
-        </div>
-        <h3 id="player-title" style="margin-top: 20px; color: white;"></h3>
-    </div>
-
+    <!-- فوتر -->
     <footer>
-        <p>طراحی شده با ❤️ برای دوستداران انیمه</p>
-        <p style="font-size: 0.8rem; margin-top: 10px;">توجه: این یک نمونه نمایشی است.</p>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>AnimeWorld</h3>
+                <p style="color: var(--text-gray); line-height: 1.8;">
+                    بهترین مرجع پخش آنلاین انیمه و مطالعه مانگا و مانهوا با زیرنویس فارسی
+                </p>
+            </div>
+            <div class="footer-col">
+                <h3>دسترسی سریع</h3>
+                <ul>
+                    <li><a href="#">خانه</a></li>
+                    <li><a href="#anime">انیمه‌ها</a></li>
+                    <li><a href="#manga">مانگاها</a></li>
+                    <li><a href="#manhwa">مانهواها</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>پشتیبانی</h3>
+                <ul>
+                    <li><a href="#">تماس با ما</a></li>
+                    <li><a href="#">قوانین و مقررات</a></li>
+                    <li><a href="#">حریم خصوصی</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>شبکه‌های اجتماعی</h3>
+                <div class="social-links">
+                    <a href="#" class="social-btn"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© ۲۰۲۴ AnimeWorld - تمامی حقوق محفوظ است.</p>
+        </div>
     </footer>
 
-    <script>
-        // Dummy Data for Demonstration
-        const animeData = [
-            { title: "Attack on Titan", ep: "قسمت ۸۵", img: "https://via.placeholder.com/300x450/333/fff?text=AOT", type: "Anime" },
-            { title: "One Piece", ep: "قسمت ۱۰۷۰", img: "https://via.placeholder.com/300x450/444/fff?text=One+Piece", type: "Anime" },
-            { title: "Jujutsu Kaisen", ep: "فصل ۲", img: "https://via.placeholder.com/300x450/555/fff?text=JJK", type: "Anime" },
-            { title: "Demon Slayer", ep: "قسمت ویژه", img: "https://via.placeholder.com/300x450/666/fff?text=Demon+Slayer", type: "Anime" },
-            { title: "Chainsaw Man", ep: "قسمت ۱۲", img: "https://via.placeholder.com/300x450/777/fff?text=Chainsaw+Man", type: "Anime" }
-        ];
-
-        const mangaData = [
-            { title: "Solo Leveling", ep: "چپتر ۱۷۹", img: "https://via.placeholder.com/300x450/222/fff?text=Solo+Leveling", type: "Manhwa" },
-            { title: "One Piece", ep: "چپتر ۱۰۹۰", img: "https://via.placeholder.com/300x450/333/fff?text=OP+Manga", type: "Manga" },
-            { title: "Tower of God", ep: "فصل ۳", img: "https://via.placeholder.com/300x450/444/fff?text=TOG", type: "Manhwa" },
-            { title: "Berserk", ep: "چپتر ۳۷۴", img: "https://via.placeholder.com/300x450/555/fff?text=Berserk", type: "Manga" },
-            { title: "The Beginning After The End", ep: "چپتر ۱۵۰", img: "https://via.placeholder.com/300x450/666/fff?text=TBATE", type: "Manhwa" }
-        ];
-
-        // Function to create cards
-        function createCards(data, containerId) {
-            const container = document.getElementById(containerId);
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.onclick = () => openPlayer(item.title, item.type);
-                
-                card.innerHTML = `
-                    <img src="${item.img}" alt="${item.title}">
-                    <div class="card-info">
-                        <h3 class="card-title">${item.title}</h3>
-                        <div class="card-meta">
-                            <span>${item.ep}</span>
-                            <span class="badge">${item.type}</span>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // Initialize Content
-        createCards(animeData, 'anime-grid');
-        createCards(mangaData, 'manga-grid');
-
-        // Player Logic
-        const modal = document.getElementById('player-modal');
-        const iframe = document.getElementById('video-frame');
-        const playerTitle = document.getElementById('player-title');
-
-        function openPlayer(title, type) {
-            modal.style.display = 'flex';
-            playerTitle.innerText = `در حال پخش: ${title} (${type})`;
-            
-            // Using a dummy video for demonstration (Big Buck Bunny)
-            // In a real site, this would be your video server URL or embedded player
-            iframe.src = "https://www.youtube.com/embed/aqz-KE-bpKQ?autoplay=1"; 
-        }
-
-        function closePlayer() {
-            modal.style.display = 'none';
-            iframe.src = ""; // Stop video
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closePlayer();
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
