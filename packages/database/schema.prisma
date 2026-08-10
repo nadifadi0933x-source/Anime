@@ -1,0 +1,319 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------------------------------
+// USERS & AUTH
+// ----------------------------------------
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String?   // Hashed
+  username      String    @unique
+  avatar        String?   @default("https://ui-avatars.com/api/?background=random")
+  bio           String?
+  role          Role      @default(USER)
+  isPremium     Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  watchList     WatchList[]
+  mangaList     MangaList[]
+  comments      Comment[]
+  likes         Like[]
+  friendships   Friendship[]
+  notifications Notification[]
+
+  @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
+  MODERATOR
+}
+
+// ----------------------------------------
+// ANIME & MANGA CORE
+// ----------------------------------------
+model Anime {
+  id              String   @id @default(cuid())
+  malId           Int?     @unique // MyAnimeList ID
+  titleEnglish    String?
+  titleJapanese   String?
+  titlePersian    String?
+  slug            String   @unique // For SEO URL
+  synopsis        String?
+  coverImage      String
+  bannerImage     String
+  trailerUrl      String?
+  type            MediaType @default(TV)
+  status          MediaStatus @default(RELEASING)
+  episodes        Int?
+  duration        Int?     // in minutes
+  rating          Float?   // MAL Score
+  popularity      Int?
+  startDate       DateTime?
+  endDate         DateTime?
+  season          Season?
+  year            Int?
+  studios         String[] // Array of studio names
+  genres          Genre[]
+  
+  relations       Relation[]
+  characters      Character[]
+  episodes        Episode[]
+  comments        Comment[]
+  watchLists      WatchList[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("animes")
+  @@index([slug])
+  @@index([malId])
+}
+
+model Manga {
+  id              String   @id @default(cuid())
+  malId           Int?     @unique
+  titleEnglish    String?
+  titleJapanese   String?
+  titlePersian    String?
+  slug            String   @unique
+  synopsis        String?
+  coverImage      String
+  bannerImage     String
+  type            MediaType @default(MANGA)
+  status          MediaStatus @default(RELEASING)
+  chapters        Int?
+  volumes         Int?
+  rating          Float?
+  authors         String[]
+  genres          Genre[]
+
+  chaptersList    MangaChapter[]
+  mangaLists      MangaList[]
+  comments        Comment[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("mangas")
+  @@index([slug])
+}
+
+model Episode {
+  id          String   @id @default(cuid())
+  animeId     String
+  anime       Anime    @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  number      Int
+  title       String?
+  description String?
+  airedAt     DateTime?
+  thumbnail   String?
+  
+  // Video Sources (Multi-quality)
+  sources     Json?    // { "1080": "url", "720": "url", ... }
+  subtitles   Json?    // [{ "lang": "fa", "url": "..." }]
+
+  comments    Comment[]
+  
+  @@unique([animeId, number])
+  @@map("episodes")
+}
+
+model MangaChapter {
+  id          String   @id @default(cuid())
+  mangaId     String
+  manga       Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  number      Float    // Support for ch 10.5
+  title       String?
+  volume      Int?
+  pages       Json?    // Array of image URLs
+  releasedAt  DateTime?
+  
+  @@unique([mangaId, number])
+  @@map("manga_chapters")
+}
+
+// ----------------------------------------
+// METADATA (Genres, Characters, etc.)
+// ----------------------------------------
+model Genre {
+  id    String @id @default(cuid())
+  name  String @unique
+  animes Anime[]
+  mangas Manga[]
+
+  @@map("genres")
+}
+
+model Character {
+  id        String @id @default(cuid())
+  name      String
+  image     String
+  role      String // Main, Supporting
+  voiceActors Json? // { "ja": "Name", "en": "Name" }
+  animes    Relation[]
+  
+  @@map("characters")
+}
+
+model Relation {
+  id          String @id @default(cuid())
+  animeId     String
+  anime       Anime  @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  relatedId   String // ID of related anime/manga
+  type        String // Sequel, Prequel, SideStory, Adaptation
+  
+  @@map("relations")
+}
+
+// ----------------------------------------
+// USER INTERACTIONS
+// ----------------------------------------
+model WatchList {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  animeId   String
+  anime     Anime    @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  status    ListStatus
+  progress  Int      @default(0) // Episodes watched
+  score     Int?     // 1-10
+  notes     String?
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, animeId])
+  @@map("watch_lists")
+}
+
+model MangaList {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mangaId   String
+  manga     Manga    @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+  status    ListStatus
+  progress  Int      @default(0) // Chapters read
+  score     Int?
+  notes     String?
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, mangaId])
+  @@map("manga_lists")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Polymorphic relation (Anime, Episode, Manga)
+  animeId   String?
+  anime     Anime?   @relation(fields: [animeId], references: [id], onDelete: Cascade)
+  episodeId String?
+  episode   Episode? @relation(fields: [episodeId], references: [id], onDelete: Cascade)
+  mangaId   String?
+  manga     Manga?   @relation(fields: [mangaId], references: [id], onDelete: Cascade)
+
+  parentId  String?
+  parent    Comment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[] @relation("CommentReplies")
+  
+  likes     Like[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("comments")
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  commentId String
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+
+  @@unique([userId, commentId])
+  @@map("likes")
+}
+
+model Friendship {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  friendId  String
+  status    FriendStatus @default(PENDING)
+  
+  @@unique([userId, friendId])
+  @@map("friendships")
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  message   String
+  link      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("notifications")
+}
+
+// ----------------------------------------
+// ENUMS
+// ----------------------------------------
+enum MediaType {
+  TV
+  MOVIE
+  OVA
+  ONA
+  SPECIAL
+  MANGA
+  NOVEL
+  ONE_SHOT
+}
+
+enum MediaStatus {
+  RELEASING
+  FINISHED
+  NOT_YET_RELEASED
+  CANCELLED
+  HIATUS
+}
+
+enum Season {
+  WINTER
+  SPRING
+  SUMMER
+  FALL
+}
+
+enum ListStatus {
+  WATCHING
+  COMPLETED
+  PLAN_TO_WATCH
+  ON_HOLD
+  DROPPED
+  READING
+  PLAN_TO_READ
+}
+
+enum FriendStatus {
+  PENDING
+  ACCEPTED
+  BLOCKED
+}
