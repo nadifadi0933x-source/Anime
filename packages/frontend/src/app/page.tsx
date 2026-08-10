@@ -199,7 +199,7 @@ export default function Home() {
                 </div>
 
                 <p className="text-lg text-text-secondary mb-8 line-clamp-3 leading-relaxed">
-                  داستان در دنیایی اتفاق می‌افتد که بشریت در داخل شهرهایی محصور در دیوارهای بزرگ زندگی می‌کند تا از تایتان‌ها، موجوداتی غول‌پیکر که انسان‌ها را می‌خورند، در امان بمانند...
+                  داستان در دنیایی اتفاق می‌افتد که بشریت در داخل شهرهایی محصور در دیوارهای بزرگ زندگی می‌کند تا از تایتان‌ها محافظت شود.
                 </p>
 
                 <div className="flex flex-wrap gap-4">
@@ -234,7 +234,7 @@ export default function Home() {
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
-                {trendingAnime.map((anime, index) => (
+                {trendingAnime.map((anime) => (
                   <div key={anime.id} className="anime-card group">
                     <div className="relative aspect-[2/3] overflow-hidden">
                       <img
@@ -285,7 +285,7 @@ export default function Home() {
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
-                {latestEpisodes.map((anime, index) => (
+                {latestEpisodes.map((anime) => (
                   <div key={anime.id} className="anime-card group">
                     <div className="relative aspect-[2/3] overflow-hidden">
                       <img
@@ -334,7 +334,7 @@ export default function Home() {
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
-                {popularManga.map((manga, index) => (
+                {popularManga.map((manga) => (
                   <div key={manga.id} className="anime-card group">
                     <div className="relative aspect-[2/3] overflow-hidden">
                       <img
