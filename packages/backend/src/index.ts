@@ -70,7 +70,7 @@ app.use((req: Request, res: Response) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-// Global error handler
+// Global error handler (middleware signature must have 4 parameters)
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   logger.error(err.stack);
   res.status(500).json({ 
@@ -79,22 +79,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT}`);
   logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 
 // Graceful shutdown
-process.on('SIGINT', async () => {
+const gracefulShutdown = async () => {
   logger.info('Shutting down gracefully...');
-  await prisma.$disconnect();
-  process.exit(0);
-});
+  server.close(async () => {
+    await prisma.$disconnect();
+    process.exit(0);
+  });
+};
 
-process.on('SIGTERM', async () => {
-  logger.info('Shutting down gracefully...');
-  await prisma.$disconnect();
-  process.exit(0);
-});
+process.on('SIGINT', gracefulShutdown);
+process.on('SIGTERM', gracefulShutdown);
 
 export default app;
